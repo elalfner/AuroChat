@@ -15,6 +15,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.JSONObject;
@@ -26,6 +28,7 @@ import org.json.JSONObject;
 public class Login implements Runnable {
 
     public static ServerSocket miSS;
+    public static ArrayList<Usuario> usuarios = new ArrayList<>();
 
     public void run() {
 
@@ -65,6 +68,8 @@ public class Login implements Runnable {
                         while (rs.next()) {
                             fullname = rs.getString("fullname");
                             jobj.put("status", "OK");
+                            Usuario us= new Usuario(username,conec);
+                            usuarios.add(us);
                         }
                         s.close();
                         con.close();

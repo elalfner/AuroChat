@@ -16,6 +16,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import org.json.JSONObject;
 
@@ -26,11 +27,18 @@ import org.json.JSONObject;
 public class ChatProvisional extends javax.swing.JFrame {
 
     /**
-     * Creates new form ChatProvisional
+     * Creates new form ChatProvisiona
      */
+    
     public ChatProvisional() {
+        Thread ObtenerContacto;
         initComponents();
+        ObtenerContacto=new Thread(new ObtenerContacto());
+        ObtenerContacto.start();
     }
+    
+    //ArrayList<Usuario> usuarios = new ;
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -243,7 +251,7 @@ public class ChatProvisional extends javax.swing.JFrame {
             
             JSONObject json = new JSONObject();
             json.put("destinatario", destinatario);
-
+            
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             out.writeObject(json.toString());
             

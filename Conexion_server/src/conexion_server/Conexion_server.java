@@ -50,11 +50,14 @@ public class Conexion_server {
             ServerSocket miSS3 = new ServerSocket(2223);
             ServerSocket miSS4 = new ServerSocket(2224);
             ServerSocket miSS5 = new ServerSocket(2225);
+            ServerSocket miSS6 = new ServerSocket(2226);
 
+            Contactos.miSS = miSS6;
             Mensajes.miSS = miSS5;
             Validar.miSS = miSS4;
             Registro.miSS = miSS3;
             Login.miSS = miSS2;
+            
 
             Server ventana = new Server();
             ventana.setVisible(true);
@@ -63,7 +66,9 @@ public class Conexion_server {
             Thread registro;
             Thread validar;
             Thread mensajes;
+            Thread contactos;
 
+            contactos = new Thread(new Contactos());
             login = new Thread(new Login());
             registro = new Thread(new Registro());
             validar = new Thread(new Validar());
@@ -73,6 +78,7 @@ public class Conexion_server {
             registro.start();
             validar.start();
             mensajes.start();
+            contactos.start();
 
             try {
 

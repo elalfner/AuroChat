@@ -58,7 +58,7 @@ public class Mensajes implements Runnable {
                     
                     horaF = hora + ":" + minutos + ":" + segundos;
                     
-                    jobj.put("status", "Problema del servidor... Intentalo más tarde");
+                    //jobj.put("status", "Problema del servidor... Intentalo más tarde");
                     
                     //-------------------------------------------------------------------
                     
