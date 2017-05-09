@@ -21,7 +21,9 @@ import org.json.JSONObject;
  * @author Susan Ramos
  */
 public class ObtenerContacto implements Runnable {
-
+    
+    public static JSONObject listconect = new JSONObject();
+    
     public void run() {
         do {
             try {
@@ -33,8 +35,9 @@ public class ObtenerContacto implements Runnable {
                 String json;
                 json = (String) in.readObject();
                 JSONObject jobj = new JSONObject(json);
-
-                System.out.println(jobj);
+                
+                listconect=jobj;
+                //System.out.println(jobj);
                 
                 sleep(1000);
 

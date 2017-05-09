@@ -45,7 +45,7 @@ public class Contactos implements Runnable {
                 
                 ObjectOutputStream out = new ObjectOutputStream(conec.getOutputStream());
                 out.writeObject(conect.toString());
-                Server.request.setText(Server.request.getText() + "Conectados: " + conect +"\n");
+                //Server.request.setText(Server.request.getText() + "Conectados: " + conect +"\n");
             } catch (Exception ex) {
                 Server.request.setText(Server.request.getText() + "Error: " + ex + "\n");
             }
