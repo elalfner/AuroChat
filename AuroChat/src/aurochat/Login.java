@@ -271,8 +271,8 @@ public class Login extends javax.swing.JFrame {
             if ("OK".equals(status)) {
                 //this.setVisible(false);
                 JOptionPane.showMessageDialog(null, "Bienvenido: " + fullname);
-                ChatProvisional Ventanaa = new ChatProvisional();
-                Ventanaa.setVisible(true);
+                Home inicio = new Home();
+                inicio.setVisible(true);
                 usernom=username;
             } else {
                 
