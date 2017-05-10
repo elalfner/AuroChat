@@ -21,7 +21,7 @@ import javax.swing.JLabel;
 import org.json.JSONObject;
 
 
-public class Home extends JFrame implements ActionListener{
+public class Home extends JFrame implements ActionListener {
     private final JLabel style_bar;
     private JLabel user = new JLabel("Inbox", SwingConstants.CENTER);
     private final JButton add;
@@ -82,6 +82,10 @@ public class Home extends JFrame implements ActionListener{
         this.setVisible(true);
         this.setResizable(false);
         this.getContentPane().setBackground(new Color(37, 44, 52));
+        
+        send.addActionListener(this);
+        //list.addActionListener(this);
+        
         orden.setHorizontalGroup
             (                  
                   orden.createParallelGroup()
@@ -150,6 +154,8 @@ public class Home extends JFrame implements ActionListener{
         
         DefaultListModel modelo = new DefaultListModel();
         modelo.addElement("Contacto 1");
+        modelo.addElement("Contacto 2");
+        modelo.addElement("Contacto 3");
         list.setModel(modelo);
         
         Thread ObtenerContacto;
@@ -161,17 +167,18 @@ public class Home extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == send){
             Socket socket;
-        
-            String mensaje;
-            mensaje = message.getText();
-            chat_show.append(mensaje + "\n");
-            message.setText(" ");
             
             try {
 
                 socket = new Socket(Login.ip, 2225);
+                
+                String mensaje;
+                mensaje = message.getText();
+                chat_show.append(mensaje + "\n");
+                message.setText(" ");
 
                 Object destinatario = list.getSelectedValue();
+                destinatario.toString();
 
                 JSONObject json = new JSONObject();
                 json.put("destinatario", destinatario);
@@ -192,34 +199,38 @@ public class Home extends JFrame implements ActionListener{
                 System.out.println(ex);
             }
         }
-        
-        if(e.getSource() == list){
-            Cambio();
-            Object usuario;
-            chat_show.setText("");
-            usuario = list.getSelectedValue();
-            //chat_selected.setText(usuario);
-            FileReader documento = null;
-             try{
-                 String Lineas;
-                 //chat_selected.getText()
-                 documento = new FileReader( list.getSelectedValue() + ".txt");
-                 BufferedReader buffer = new BufferedReader(documento);
-             while((Lineas = buffer.readLine())!=null) {
-                 chat_show.append(Lineas + "\n");
-             }
-             buffer.close();
-             }catch (Exception E){
-                 System.out.println(E.getMessage());
-             }
-        }
+    }
+    
+    private void listMouseClicked(java.awt.event.MouseEvent evt) {                                   
+       Cambio();
+        Object usuario;
+        chat_show.setText("");
+        usuario = list.getSelectedValue();
+        usuario.toString();
+        //chat_selected.setText(usuario);
+        FileReader documento = null;
+         try{
+             String Lineas;
+             //chat_selected.getText()
+             documento = new FileReader( usuario + ".txt");
+             BufferedReader buffer = new BufferedReader(documento);
+         while((Lineas = buffer.readLine())!=null) {
+             chat_show.append(Lineas + "\n");
+         }
+         buffer.close();
+         }catch (Exception E){
+             System.out.println(E.getMessage());
+         }
     }
     
     void Cambio(){
         String texto;
         texto = chat_show.getText();
+        Object usuario;
+        usuario = list.getSelectedValue();
+        usuario.toString();
         try{
-            File ArchivoTexto = new File(list.getSelectedValue() + ".txt");
+            File ArchivoTexto = new File(usuario + ".txt");
             FileWriter Escribir = new FileWriter(ArchivoTexto);
             BufferedWriter Buffer = new BufferedWriter(Escribir);
             PrintWriter Imprimir = new PrintWriter(Buffer); 
@@ -228,5 +239,37 @@ public class Home extends JFrame implements ActionListener{
         }catch(Exception E){
             System.out.println(E.getMessage());
         }
+    }
+    
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(ChatProvisional.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ChatProvisional.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ChatProvisional.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ChatProvisional.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Home().setVisible(true);
+            }
+        });
     }
 }
