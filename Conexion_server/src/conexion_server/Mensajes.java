@@ -45,7 +45,8 @@ public class Mensajes implements Runnable {
                 try {
                     json = (String) in.readObject();
                     JSONObject jobj = new JSONObject(json);
-
+                    
+                    String mensaje = jobj.getString("mensaje");
                     String destinatario = jobj.getString("destinatario");
                     
                     String horaF;
@@ -58,7 +59,7 @@ public class Mensajes implements Runnable {
                     
                     horaF = hora + ":" + minutos + ":" + segundos;
                     
-                    jobj.put("status", "Problema del servidor... Intentalo más tarde");
+                    //jobj.put("status", "Problema del servidor... Intentalo más tarde");
                     
                     //-------------------------------------------------------------------
                     

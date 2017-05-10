@@ -16,6 +16,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import org.json.JSONObject;
 
@@ -24,13 +25,23 @@ import org.json.JSONObject;
  * @author delfi
  */
 public class ChatProvisional extends javax.swing.JFrame {
-
+    
+    
     /**
-     * Creates new form ChatProvisional
+     * 
      */
+    
+   
+    
     public ChatProvisional() {
+        Thread ObtenerContacto;
         initComponents();
+        ObtenerContacto=new Thread(new ObtenerContacto());
+        ObtenerContacto.start();
     }
+    
+    //ArrayList<Usuario> usuarios = new ;
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -228,37 +239,40 @@ public class ChatProvisional extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-        Socket socket;
+        String mensaje = Mensajito.getText();
+        if (!mensaje.equals(" ") && !(mensaje.equals(""))) {
+            Socket socket;
         
-        try {
+            try {
+                socket = new Socket(Login.ip, 2225);
+             
+                String destinatario = Name.getText();
 
-            socket = new Socket(Login.ip, 2225);
+                JSONObject json = new JSONObject();
+                
+                json.put("destinatario", destinatario);
+                json.put("mensaje", mensaje);
+                //json.put("emisor",Login.username);
 
-            String mensaje;
-            mensaje = Mensajito.getText();
-            AreaTexto.append(mensaje + "\n");
-            Mensajito.setText(" ");
-            
-            String destinatario = Name.getText();
-            
-            JSONObject json = new JSONObject();
-            json.put("destinatario", destinatario);
+                //Manda json con destintario
+                ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+                out.writeObject(json.toString());
 
-            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-            out.writeObject(json.toString());
-            
-            InputStream inn = socket.getInputStream();
-            ObjectInputStream in = new ObjectInputStream(inn);
-            String jobj = (String) in.readObject();
-            json = new JSONObject(jobj);
+                //Recibe
+                InputStream inn = socket.getInputStream();
+                ObjectInputStream in = new ObjectInputStream(inn);
+                String jobj = (String) in.readObject();
+                json = new JSONObject(jobj);
 
-            String hora = json.getString("hora");
-            
-            AreaTexto.append(hora + "\n");
+                String hora = json.getString("hora");
+                AreaTexto.append(mensaje + "\n"+hora + "\n");
+                Mensajito.setText(" ");
 
-        } catch (Exception ex) {
-            System.out.println(ex);
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }   
         }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void OpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpcionesActionPerformed

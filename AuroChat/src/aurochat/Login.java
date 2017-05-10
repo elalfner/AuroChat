@@ -14,6 +14,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -29,9 +30,13 @@ public class Login extends javax.swing.JFrame {
     public static String ip2;
     public static String ip3;
     public static String ip4;
-
+    
     public static String ip;
 
+    
+    public static String usernom;
+
+  
     /**
      * Creates new form NewJFrame1
      */
@@ -40,9 +45,10 @@ public class Login extends javax.swing.JFrame {
         ip1 = "192";
         ip2 = "168";
         ip3 = "1";
-        ip4 = "91";
+        ip4 = "86";
 
         ip = ip1 + "." + ip2 + "." + ip3 + "." + ip4;
+        usernom="";
     }
 
     /**
@@ -270,6 +276,7 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Bienvenido: " + fullname);
                 ChatProvisional Ventanaa = new ChatProvisional();
                 Ventanaa.setVisible(true);
+                usernom=username;
             } else {
                 
                 if("Usuario o Contraseña incorrectos".equals(status)){

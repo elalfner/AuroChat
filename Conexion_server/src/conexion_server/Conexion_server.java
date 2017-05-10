@@ -50,11 +50,18 @@ public class Conexion_server {
             ServerSocket miSS3 = new ServerSocket(2223);
             ServerSocket miSS4 = new ServerSocket(2224);
             ServerSocket miSS5 = new ServerSocket(2225);
+            ServerSocket miSS6 = new ServerSocket(2226);
+            ServerSocket miSS7 = new ServerSocket(2227);
+            ServerSocket miSS8 = new ServerSocket(2228);
 
+            Contactos.miSS = miSS8;
+            Grupos.miSS = miSS7;
+            Conectados.miSS = miSS6;
             Mensajes.miSS = miSS5;
             Validar.miSS = miSS4;
             Registro.miSS = miSS3;
             Login.miSS = miSS2;
+            
 
             Server ventana = new Server();
             ventana.setVisible(true);
@@ -63,17 +70,26 @@ public class Conexion_server {
             Thread registro;
             Thread validar;
             Thread mensajes;
+            Thread contactos;
+            Thread grupos;
+            Thread conectados;
 
+            contactos = new Thread(new Contactos());
             login = new Thread(new Login());
             registro = new Thread(new Registro());
             validar = new Thread(new Validar());
             mensajes = new Thread(new Mensajes());
+            grupos = new Thread(new Grupos());
+            conectados = new Thread(new Conectados());
 
             login.start();
             registro.start();
             validar.start();
             mensajes.start();
-
+            contactos.start();
+            grupos.start();
+            conectados.start();
+            
             try {
 
                 Runtime obj = Runtime.getRuntime();
