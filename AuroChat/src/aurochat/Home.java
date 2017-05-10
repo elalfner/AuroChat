@@ -1,5 +1,6 @@
 package aurochat;
 
+import static aurochat.Login.ip;
 import java.awt.Font;
 import javax.swing.*;
 import java.awt.Color;
@@ -15,6 +16,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,7 +31,7 @@ public class Home extends JFrame implements ActionListener {
     private JButton contacts = new JButton("Contactos");
     private JButton online = new JButton("Conectados");
     private JButton groups = new JButton("Grupos");
-    private JList list = new JList();
+    public static JList list = new JList();
     private JTextArea chat_show = new JTextArea();
     private JTextArea message = new JTextArea();
     private JButton send;
@@ -52,8 +55,10 @@ public class Home extends JFrame implements ActionListener {
         this.send.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.LIGHT_GRAY));
 
         this.list.setBackground(new Color(47,54,62));
+        this.list.setForeground(Color.WHITE);
         
         this.message.setBackground(Color.LIGHT_GRAY);
+        
         
         this.user.setFont(new Font("Trebuchet MS", Font.PLAIN, 26));
         this.user.setForeground(Color.WHITE);
@@ -82,6 +87,12 @@ public class Home extends JFrame implements ActionListener {
         this.setVisible(true);
         this.setResizable(false);
         this.getContentPane().setBackground(new Color(37, 44, 52));
+        
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         
         send.addActionListener(this);
         //list.addActionListener(this);
@@ -153,14 +164,12 @@ public class Home extends JFrame implements ActionListener {
         this.pack();
         
         DefaultListModel modelo = new DefaultListModel();
-        modelo.addElement("Contacto 1");
-        modelo.addElement("Contacto 2");
-        modelo.addElement("Contacto 3");
+        modelo.addElement("Hola");
         list.setModel(modelo);
         
-        Thread ObtenerContacto;
-        ObtenerContacto=new Thread(new ObtenerContacto());
-        ObtenerContacto.start();
+        Thread ObtConectados;
+        ObtConectados=new Thread(new ObtConectados());
+        ObtConectados.start();
     }
 
     @Override
@@ -198,6 +207,17 @@ public class Home extends JFrame implements ActionListener {
             } catch (Exception ex) {
                 System.out.println(ex);
             }
+        }
+    }
+    
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
+        JOptionPane.showMessageDialog(null, "Cerrando sesión");
+        Socket socket;
+        try {
+            //socket = new Socket(ip, 2230);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

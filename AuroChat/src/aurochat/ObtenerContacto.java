@@ -25,26 +25,6 @@ public class ObtenerContacto implements Runnable {
     public static JSONObject listconect = new JSONObject();
     
     public void run() {
-        do {
-            try {
-
-                Socket conec = new Socket(ip, 2226);
-                InputStream inn = conec.getInputStream();
-                ObjectInputStream in = new ObjectInputStream(inn);
-
-                String json;
-                json = (String) in.readObject();
-                JSONObject jobj = new JSONObject(json);
-                
-                listconect=jobj;
-                //System.out.println(jobj);
-                
-                sleep(1000);
-
-            } catch (Exception ex) {
-                Logger.getLogger(ObtenerContacto.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        } while (true);
+        
     }
 }
