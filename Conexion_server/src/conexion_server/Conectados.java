@@ -26,7 +26,7 @@ public class Conectados implements Runnable {
             try {
                 Socket conec = new Socket();
                 conec = miSS.accept();
-
+                
                 Iterator<Usuario> itee = Login.usuarios.iterator();
 
                 JSONObject conect = new JSONObject();
