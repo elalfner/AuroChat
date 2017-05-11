@@ -34,7 +34,7 @@ public class Conectados implements Runnable {
 
                 while (itee.hasNext()) {
                     Usuario us = itee.next();
-
+                    
                     nomb.put(us.nombre);
                 }
 

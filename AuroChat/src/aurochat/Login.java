@@ -274,6 +274,7 @@ public class Login extends javax.swing.JFrame {
                 Home inicio = new Home();
                 inicio.setVisible(true);
                 usernom=username;
+                this.setVisible(false);
             } else {
                 
                 if("Usuario o Contraseña incorrectos".equals(status)){

@@ -53,7 +53,9 @@ public class Conexion_server {
             ServerSocket miSS6 = new ServerSocket(2226);
             ServerSocket miSS7 = new ServerSocket(2227);
             ServerSocket miSS8 = new ServerSocket(2228);
+            ServerSocket miSS30 = new ServerSocket(2230);
 
+            CerrarSesion.miSS = miSS30;
             Contactos.miSS = miSS8;
             Grupos.miSS = miSS7;
             Conectados.miSS = miSS6;
@@ -73,6 +75,7 @@ public class Conexion_server {
             Thread contactos;
             Thread grupos;
             Thread conectados;
+            Thread cerrar;
 
             contactos = new Thread(new Contactos());
             login = new Thread(new Login());
@@ -81,6 +84,7 @@ public class Conexion_server {
             mensajes = new Thread(new Mensajes());
             grupos = new Thread(new Grupos());
             conectados = new Thread(new Conectados());
+            cerrar = new Thread(new CerrarSesion());
 
             login.start();
             registro.start();
@@ -89,6 +93,7 @@ public class Conexion_server {
             contactos.start();
             grupos.start();
             conectados.start();
+            cerrar.start();
             
             try {
 
